@@ -25,7 +25,7 @@ Alarm::Alarm(const stm32plus::GpioPinRef& Pin, uint32_t threadFreq,
 
 
 void Alarm::update(void) {
-  if (this->alarmIsOn) {
+  if (*this->alarmIsOn) {
     this->periodCount = this->threadFrequency / *(this->frequency);
     ++this->tick;
     if (this->tick >= (this->periodCount / 2)) {
