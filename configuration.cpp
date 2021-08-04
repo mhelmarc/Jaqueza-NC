@@ -17,6 +17,7 @@
 
 #include "modules/module.h"
 #include "modules/blink/blink.h"
+#include "modules/alarm/alarm.h"
 #include "modules/resetPin/resetPin.h"
 #include "modules/stepgen/stepgen.h"
 #include "modules/digitalPin/digitalPin.h"
@@ -45,8 +46,14 @@ volatile uint8_t* ptrOutputs;
 
 /* Blinker */
 void makeBlinker( const GpioPinRef led, uint8_t frequency) {
-  Module *blinker = new Blink(led, static_cast<int32_t>(PRU_SERVOFREQ), frequency);
+  Module *blinker = new Blink(led, static_cast<uint32_t>(PRU_SERVOFREQ), frequency);
   servoThread->registerModule(blinker);
+}
+
+/* Alarm */
+void makeAlarm(const stm32plus::GpioPinRef& pin, volatile uint32_t* freq, volatile bool* status) {
+  Module *alarm = new Alarm(pin, static_cast<uint32_t>(PRU_SERVOFREQ), freq, status);
+  servoThread->registerModule(alarm);
 }
 
 /* EStop */
@@ -57,7 +64,7 @@ void makeEStopper(const GpioPinRef estop_pin) {
 }
 
 
-/* Rese Pin */
+/* Reset Pin */
 void makeResetter(volatile bool *pReset,  const GpioPinRef resetPin) {
   ptrPRUreset = pReset;
   Module *resetter = new ResetPin(*ptrPRUreset, resetPin);

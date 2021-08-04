@@ -69,5 +69,5 @@ void makeResetter(volatile bool*,  const stm32plus::GpioPinRef);
 void makeStepGenerator(int, const  stm32plus::GpioPinRef, const  stm32plus::GpioPinRef,  const stm32plus::GpioPinRef);
 void makeLimitPin(int, bool, const stm32plus::GpioPinRef);
 void initPwm(uint8_t, uint32_t);
-
+void makeAlarm(const stm32plus::GpioPinRef&, volatile uint32_t*, volatile bool*);
 #endif

@@ -60,6 +60,9 @@ volatile uint8_t rejectCnt;
 static volatile bool SPIdata;
 static volatile bool SPIdataError;
 static volatile bool PRUreset;
+static volatile bool alarmIsOn;
+static volatile uint32_t alarmFrequency;
+
 bool configError = false;
 bool threadsRunning = false;
 
@@ -175,6 +178,11 @@ int loadModules() {
 
   xputs(" Heartbeat LED\n");
   makeBlinker(Led[0], 1);
+
+//  alarmIsOn = false;
+//  alarmFrequency = 1;
+//  xputs(" Alarm\n");
+//  makeAlarm(Led[0], &alarmFrequency, &alarmIsOn);
 
   xputs(" Reset pin\n");
   makeResetter(&PRUreset, resetPin[13]);
