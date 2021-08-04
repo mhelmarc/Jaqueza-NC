@@ -1,0 +1,19 @@
+This is a Non-PRU port of Remora (https://github.com/scottalford75/Remora)
+a free, opensource LinuxCNC component and Programmable Realtime Unit (PRU)
+to stm32f4 (STM32F407vg to be exact that's what I have).
+
+TODO:
+	Hardware PWM
+	Encoder input (MPG, servo)
+ 
+Library used is https://github.com/andysworkshop/stm32plus with a few mods.
+Unfortunately the library supported a limited series of STM32F4 microcontrollers
+due to an older stdperipheral library used.
+
+***This is an Eclipse project with GCC-Arm plugins (not STM32CUBE)
+
+If building with GCC >= 9.x, the temporary workaround can be found
+here https://github.com/andysworkshop/stm32plus/issues/224
+
+keep having fun, and don't forget to share :-)
+(c) 2021 mhel marcelo jaqueza@gmx.com
