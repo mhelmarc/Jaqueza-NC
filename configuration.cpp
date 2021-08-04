@@ -44,8 +44,8 @@ volatile uint8_t* ptrInputs;
 volatile uint8_t* ptrOutputs;
 
 /* Blinker */
-void makeBlinker( const GpioPinRef led) {
-  Module *blinker = new Blink(led, static_cast<int32_t>(PRU_SERVOFREQ), 1);
+void makeBlinker( const GpioPinRef led, uint8_t frequency) {
+  Module *blinker = new Blink(led, static_cast<int32_t>(PRU_SERVOFREQ), frequency);
   servoThread->registerModule(blinker);
 }
 

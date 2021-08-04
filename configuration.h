@@ -64,7 +64,7 @@ enum {
 };
 
 void makeEStopper(const stm32plus::GpioPinRef);
-void makeBlinker( const stm32plus::GpioPinRef);
+void makeBlinker( const stm32plus::GpioPinRef, uint8_t);
 void makeResetter(volatile bool*,  const stm32plus::GpioPinRef);
 void makeStepGenerator(int, const  stm32plus::GpioPinRef, const  stm32plus::GpioPinRef,  const stm32plus::GpioPinRef);
 void makeLimitPin(int, bool, const stm32plus::GpioPinRef);
