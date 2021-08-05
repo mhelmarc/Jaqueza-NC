@@ -151,9 +151,9 @@ void SPIDma<TSpi>::init(void) {
  */
 template<typename TSpi>
 void SPIDma<TSpi>::enableStreamCopier(volatile rxData_t *src) {
+  /* call to beginCopyMemory enables the stream */
   _stream_copier.beginCopyMemory(const_cast<uint8_t*>(_rxData->rx.buffer),
       const_cast<uint8_t*>(src->rx.buffer), BUFFER_SIZE, DMA_Priority_Medium);
-  enableRxDmaStream();
 }
 
 

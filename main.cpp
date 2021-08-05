@@ -90,7 +90,7 @@ uint8_t ugetcWrapper(void) {
 /* This is called from SPI dma receive complete interrupt */
 void spiRxCompleteCallback(volatile rxData_t *rx) {
 
-  _spiDma->disableRxDmaStream();
+  /* DMA receive interrupt disable and re-enable the stream */
 
   SPIdata = false;
   SPIdataError = false;
@@ -99,7 +99,6 @@ void spiRxCompleteCallback(volatile rxData_t *rx) {
     case PRU_READ:
         SPIdata = true;
         rejectCnt = 0;
-        _spiDma->disableStreamCopier();
     break;
 
     case PRU_WRITE:
@@ -113,6 +112,7 @@ void spiRxCompleteCallback(volatile rxData_t *rx) {
       if (rejectCnt > 5) {
         SPIdataError = true;
       }
+
       _spiDma->disableStreamCopier();
 
   }
