@@ -198,7 +198,7 @@ inline void SPIDma<TSpi>::disableDmaInterrupts(void) {
 
 /* This is called from the callback function in main */
 template<typename TSpi>
-void SPIDma<TSpi>::swapBuffer(volatile rxData_t* curbuf) {
+inline void SPIDma<TSpi>::swapBuffer(volatile rxData_t* curbuf) {
   if (curbuf == &spiRxBuffer1){
     _RxBuffer = &spiRxBuffer2;
   }
@@ -218,6 +218,7 @@ void SPIDma<TSpi>::onDmaRxInterrupt(DmaEventType ev) {
     /* call the function in main */
     _spi_DmaRxInterruptCallback(_RxBuffer);
 
+    swapBuffer(_RxBuffer);
     /* Interrupts automatically disables the streams
      * it is re-initialized when beginread()is called ,
      */

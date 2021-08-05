@@ -117,8 +117,6 @@ void spiRxCompleteCallback(volatile rxData_t *rx) {
 
   }
 
-  _spiDma->swapBuffer(rx);
-
 }
 
 
