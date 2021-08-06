@@ -1,4 +1,4 @@
-This is a Non-PRU port of Remora (https://github.com/scottalford75/Remora)
+This is Nouveau-PRU port of Remora (https://github.com/scottalford75/Remora)
 a free, opensource LinuxCNC component and Programmable Realtime Unit (PRU)
 to stm32f4 (STM32F407vg to be exact that's what I have).
 
