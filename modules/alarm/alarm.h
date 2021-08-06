@@ -1,7 +1,6 @@
 /*
  * alarm.h
  *	  This file is part of jaqueza-netnc
- *    Copyright (C) 2021 Mhel Marcelo
  *
  */
 
