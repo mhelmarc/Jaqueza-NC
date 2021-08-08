@@ -44,7 +44,6 @@ class SPIDma {
     void setRxTxDmaEnableBits(void);
     void onDmaTxInterrupt(DmaEventType ev);
     void onDmaRxInterrupt(DmaEventType ev);
-    void onDmaStreamCopierInterrupt(DmaEventType ev);
 
     void disableDmaInterrupts(void);
     void enableDmaInterrupts(void);
@@ -91,10 +90,6 @@ SPIDma<TSpi>::SPIDma(volatile txData_t *txdata, volatile rxData_t *rxdata, vPFun
 
   _spi_txdma.DmaInterruptEventSender.insertSubscriber(
       DmaInterruptEventSourceSlot::bind(this, &SPIDma::onDmaTxInterrupt));
-
-  _stream_copier.DmaInterruptEventSender.insertSubscriber(
-      DmaInterruptEventSourceSlot::bind(this,
-          &SPIDma::onDmaStreamCopierInterrupt));
 
   init();
 }
@@ -154,6 +149,9 @@ void SPIDma<TSpi>::enableStreamCopier(volatile rxData_t *src) {
   /* call to beginCopyMemory enables the stream */
   _stream_copier.beginCopyMemory(const_cast<uint8_t*>(_rxData->rx.buffer),
       const_cast<uint8_t*>(src->rx.buffer), BUFFER_SIZE, DMA_Priority_Medium);
+  if(_stream_copier.isComplete()) {
+    _stream_copier.clearCompleteFlag();
+  }
 }
 
 
@@ -183,7 +181,6 @@ template<typename TSpi>
 inline void SPIDma<TSpi>::enableDmaInterrupts(void) {
   _spi_txdma.enableInterrupts(SpiDmaRxTransferComplete);
   _spi_rxdma.enableInterrupts(SpiDmaTxTransferComplete);
-  _stream_copier.enableInterrupts(StreamCopierTransferComplete);
 }
 
 
@@ -192,7 +189,6 @@ template<typename TSpi>
 inline void SPIDma<TSpi>::disableDmaInterrupts(void) {
   _spi_txdma.disableInterrupts(SpiDmaRxTransferComplete);
   _spi_rxdma.disableInterrupts(SpiDmaTxTransferComplete);
-  _stream_copier.disableInterrupts(StreamCopierTransferComplete);
 }
 
 
@@ -243,14 +239,6 @@ void SPIDma<TSpi>::onDmaTxInterrupt(DmaEventType ev) {
 
 }
 
-
-/* DMA Stream copier one */
-template<typename TSpi>
-void SPIDma<TSpi>::onDmaStreamCopierInterrupt(DmaEventType ev) {
-  if (ev == DmaEventType::EVENT_COMPLETE) {
-    _stream_copier.clearCompleteFlag();
-  }
-}
 
 
 #endif /* DMASPI_H_ */
